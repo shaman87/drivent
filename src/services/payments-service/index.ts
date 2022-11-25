@@ -1,4 +1,4 @@
-import { notFoundError, requestError, unauthorizedError } from "@/errors";
+import { notFoundError, unauthorizedError } from "@/errors";
 import { CardData } from "@/protocols";
 import paymentsRepository from "@/repositories/payments-repository";
 import ticketsRepository from "@/repositories/tickets-repository";

@@ -1,7 +1,7 @@
 import { notFoundError, unauthorizedError } from "@/errors";
 import { CardData } from "@/protocols";
-import paymentsRepository from "@/repositories/payments-repository";
-import ticketsRepository from "@/repositories/tickets-repository";
+import paymentsRepository from "@/repositories/payment-repository";
+import ticketsRepository from "@/repositories/ticket-repository";
 import { Payment } from "@prisma/client";
 
 async function getPaymentByTicketId(ticketId: number, userId: number): Promise<Payment> {

@@ -1,4 +1,4 @@
-import { getHotels, getHotelWithRooms } from "@/controllers/hotels-controller";
+import { getHotels, getHotelWithRooms } from "@/controllers/hotel-controller";
 import { authenticateToken } from "@/middlewares";
 import { Router } from "express";
 

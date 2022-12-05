@@ -13,3 +13,18 @@ export async function getBooking(req: AuthenticatedRequest, res: Response) {
     if(error.name === "NotFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
+
+export async function postBooking(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const { roomId } = req.body;
+  
+  if(!roomId || isNaN(roomId) || roomId <= 0) return res.sendStatus(httpStatus.BAD_REQUEST);
+
+  try {
+    const booking = await bookingService.createBooking(userId, roomId);
+    return res.status(httpStatus.OK).send({ bookingId: booking.id });
+  } catch(error) {
+    if(error.name === "NotFoundError") return res.sendStatus(httpStatus.NOT_FOUND);
+    if(error.name === "ForbiddenError") return res.sendStatus(httpStatus.FORBIDDEN);
+  }
+}

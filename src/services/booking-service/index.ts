@@ -43,6 +43,23 @@ async function createBooking(userId: number, roomId: number): Promise<Booking> {
   return booking;
 }
 
-const bookingService = { getBookingByUserId, createBooking };
+async function updateBooking(userId: number, bookingId: number, roomId: number): Promise<Booking> {
+  const booking = await bookingRepository.findBookingById(bookingId);
+  if(!booking) throw notFoundError();
+  if(booking.userId !== userId) throw forbiddenError();
+
+  const room = await hotelsRepository.findRoomById(roomId);
+  if(!room) throw notFoundError();
+  if(room.id === booking.Room.id) throw forbiddenError();
+
+  const roomBookings = await bookingRepository.findBookingsByRoomId(roomId);
+  if(roomBookings.length >= room.capacity) throw forbiddenError();
+
+  const result = await bookingRepository.updateBooking(booking.id, room.id);
+
+  return result;
+}
+
+const bookingService = { getBookingByUserId, createBooking, updateBooking };
 
 export default bookingService;
